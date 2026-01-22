@@ -16,8 +16,9 @@ This repository contains Cypress end-to-end tests for the web application, focus
 git clone <repository-url>
 cd <project-folder>
 npm install
-
-rest scripts
+npm run cy:open // run in test explorer
+npm run cy:run // run headless
+npm run cy:run:all // run headless with reporting
 ```
 
 ### folder structure
