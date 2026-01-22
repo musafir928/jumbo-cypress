@@ -24,6 +24,7 @@ module.exports = defineConfig({
     env: {
       EMAIL: process.env.EMAIL,
       PASSWORD: process.env.PASSWORD,
+      FIRST_NAME: process.env.FIRST_NAME,
     },
 
     setupNodeEvents(on, config) {
