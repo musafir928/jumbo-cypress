@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 import HomePage from '../pages/HomePage'
 
 describe('Home Page Navigation - Jumbo', () => {
