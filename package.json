@@ -1,0 +1,12 @@
+{
+  "name": "jumbo-cypress",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["e2e", "cypress"],
+  "author": "Adil Ablimit",
+  "license": "ISC",
+  "type": "commonjs"
+}
