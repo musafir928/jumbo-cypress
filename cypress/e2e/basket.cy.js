@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import HomePage from "../pages/HomePage"
+import HomePage from "../pages/HomePage";
 
 const homePage = new HomePage();
 const productNumber = 0;
@@ -8,66 +8,88 @@ const productNumber = 0;
 describe("basket functionality", () => {
 
     beforeEach(() => {
-        homePage.visit();
-        homePage.goToProducten();
-        cy.get(`[data-testid="product-card-${productNumber}"]`).first().click();
+        homePage.visitProducten();
 
-        cy.wait(1000);
+        cy.get('[data-testid^="product-card-"]', { timeout: 10000 })
+            .should('have.length.at.least', 1);
 
+        cy.get(`[data-testid="product-card-${productNumber}"]`)
+            .first()
+            .should('be.visible')
+            .click();
+
+        cy.wait(4000);
         cy.get('body').then($body => {
             if ($body.find('#onetrust-accept-btn-handler').length) {
-                cy.get('#onetrust-accept-btn-handler').then($btn => {
-                    cy.wrap($btn).click();
-                });
+                cy.get('#onetrust-accept-btn-handler').click()
             }
-        });
+        })
 
-        cy.contains("button", "Toevoegen aan mandje")
+
+        cy.contains("button", "Toevoegen aan mandje", { timeout: 10000 })
             .should("be.visible")
+            .and("be.enabled")
             .click();
-    });
 
-    afterEach(() => {
-        cy.clearCookies();
-        cy.clearLocalStorage();
+        cy.get(".basket-button .count", { timeout: 5000 })
+            .should("be.visible")
+            .and("have.text", "1");
     });
 
     it("should be able to add product to the basket from details page", () => {
-        cy.get(`[data-testid="add-button"]`).first().click();
+        cy.get('[data-testid="add-button"]')
+            .first()
+            .should("be.visible")
+            .click();
 
         cy.get(".basket-button .count")
             .should("have.text", "2");
     });
 
     it("should be able to remove product from the basket from details page", () => {
-        cy.get(`[data-testid="add-button"]`).first().click();
+        cy.get('[data-testid="add-button"]')
+            .first()
+            .should("be.visible")
+            .click();
 
         cy.get(".basket-button .count")
             .should("have.text", "2");
 
-        cy.get(`[data-testid="remove-button"]`).first().click();
+        cy.get('[data-testid="remove-button"]')
+            .first()
+            .should("be.visible")
+            .click();
 
         cy.get(".basket-button .count")
             .should("have.text", "1");
     });
 
     it("basket page should have correct count of products", () => {
-        cy.get(`[data-testid="add-button"]`).first().click();
+        cy.get('[data-testid="add-button"]')
+            .first()
+            .should("be.visible")
+            .click();
 
         cy.get(".basket-button .count")
             .should("have.text", "2");
 
-        homePage.goToMandje();
+        homePage.visitMandje();
 
-        cy.contains(".jum-quantity-button-container span", "2")
-            .should("exist");
+        cy.get(".jum-quantity-button-container", { timeout: 10000 })
+            .should("be.visible");
+
+        cy.get(".jum-quantity-button-container span", { timeout: 10000 })
+            .should("have.text", "2");
     });
 
     it("basket page should have remove products option", () => {
-        homePage.goToMandje();
+        homePage.visitMandje();
 
-        cy.get(".card-line-item-actions__remove-button").click();
+        cy.get(".card-line-item-actions__remove-button", { timeout: 10000 })
+            .should("be.visible")
+            .click();
 
-        cy.get(".basket-products").find(`[data-testid="add-button"]`).should("not.exist");
+        cy.get('[data-testid="add-button"]')
+            .should("not.exist");
     });
 });

@@ -7,7 +7,7 @@ const homePage = new HomePage();
 describe("Open the product detail page", () => {
     beforeEach(() => {
         homePage.visit()
-        homePage.goToProducten();
+        homePage.visitProducten();
     })
 
     it("should be able to see product details", () => {

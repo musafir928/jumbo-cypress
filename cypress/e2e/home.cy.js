@@ -26,6 +26,6 @@ describe('Home Page Navigation - Jumbo', () => {
     })
 
     it('should navigate to Mandje page', () => {
-        homePage.goToMandje()
+        homePage.goToMandjeWithButton()
     })
 })

@@ -7,9 +7,58 @@ function acceptCookiesIfPresent() {
 }
 
 class HomePage {
+    /**
+     * this function is to handle cookie banner 
+     * visit() functions takes onLoad as cb
+     * onload helps us to make sure page fully loaded
+     * this will handle page synchronization racing issue
+     */
     visit() {
-        cy.visit('/')
-        acceptCookiesIfPresent();
+        cy.visit('/', {
+            onLoad() {
+                cy.get('body').then($body => {
+                    if ($body.find('#onetrust-accept-btn-handler').length) {
+                        cy.get('#onetrust-accept-btn-handler').click()
+                    }
+                })
+            }
+        })
+    }
+
+    /**
+    * this function is to handle cookie banner 
+    * visit() functions takes onLoad as cb
+    * onload helps us to make sure page fully loaded
+    * this will handle page synchronization racing issue
+    */
+    visitProducten() {
+        cy.visit('/producten', {
+            onLoad() {
+                cy.get('body').then($body => {
+                    if ($body.find('#onetrust-accept-btn-handler').length) {
+                        cy.get('#onetrust-accept-btn-handler').click()
+                    }
+                })
+            }
+        })
+    }
+
+    /**
+    * this function is to handle cookie banner 
+    * visit() functions takes onLoad as cb
+    * onload helps us to make sure page fully loaded
+    * this will handle page synchronization racing issue
+    */
+    visitMandje() {
+        cy.visit('/mandje', {
+            onLoad() {
+                cy.get('body').then($body => {
+                    if ($body.find('#onetrust-accept-btn-handler').length) {
+                        cy.get('#onetrust-accept-btn-handler').click()
+                    }
+                })
+            }
+        })
     }
 
     productenLink() {
@@ -57,11 +106,9 @@ class HomePage {
         cy.location('pathname').should('include', '/aanbiedingen')
     }
 
-    goToMandje() {
+    goToMandjeWithButton() {
         this.mandjeIcon().click()
-        cy.get('.basket-page');
     }
-
 }
 
 export default HomePage
